@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
-import './style/App.css';
+import '../style/App.css';
 import PostList from './PostList';
-import Modal from './UX/modal/Modal';
 
 export class App extends Component {
-    constructor() {
-        super();
-
-        this.state = {
-            posts: [],
-        };
-    }
+    state = {
+        posts: [],
+    };
 
     render() {
         return (
             <div className='App'>
-                <Modal></Modal>
-                <PostList items={this.state.posts} />
+                <div className='container'>
+                    <PostList posts={this.state.posts} />
+                </div>
             </div>
         );
     }

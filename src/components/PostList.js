@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import '../style/PostList.css';
 import PostItem from './PostItem';
+import Modal from './UX/modal/Modal';
 
 export class PostList extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
+            posts: [],
             show: false,
         };
         this.showModal = this.showModal.bind(this);
@@ -18,14 +21,15 @@ export class PostList extends Component {
     hideModal = () => {
         this.setState({ show: false });
     };
-
     render() {
-        const { id, title, body } = this.props;
         return (
             <>
+                <Modal show={this.state.show} handleClose={this.hideModal}>
+                    <div>{this.props.posts[1].body}</div>
+                </Modal>
                 <ul className='post__list'>
-                    {this.props.items.map((item, index) => {
-                        return <PostItem text={item.body} key={index} />;
+                    {this.props.posts.map((post, index) => {
+                        return <PostItem showModal={this.showModal} text={post.body} key={index} />;
                     })}
                 </ul>
             </>
@@ -34,20 +38,3 @@ export class PostList extends Component {
 }
 
 export default PostList;
-
-/* 
-            <li className='list__item' data-id={id}>
-                    <h2>{title}</h2>
-                    <p>{body}</p>
-                    <Modal show={this.state.show} handleClose={this.hideModal}>
-                        <p>Modal</p>
-                    </Modal>
-                    <div className='list-item__inner'>
-                        <button className='list-item__btn edit'>Edit</button>
-                        <button onClick={this.showModal} className='list-item__btn delete'>
-                            Delete
-                        </button>
-                    </div>
-                </li>
-
-*/
