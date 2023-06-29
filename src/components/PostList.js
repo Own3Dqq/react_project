@@ -1,37 +1,91 @@
 import React, { Component } from 'react';
 import '../style/PostList.css';
 import PostItem from './PostItem';
-import Modal from './UX/modal/Modal';
+import ModalEdit from './UX/modal/ModalEdit';
+import ModalDelete from './UX/modal/ModalDelete';
 
 export class PostList extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            posts: [],
-            show: false,
+            posts: [...this.props.posts],
+            modalDelete: false,
+            modalEdit: false,
         };
-        this.showModal = this.showModal.bind(this);
-        this.hideModal = this.hideModal.bind(this);
+        this.showDeleteModal = this.showDeleteModal.bind(this);
+        this.hideDeleteModal = this.hideDeleteModal.bind(this);
+        this.showEditModal = this.showEditModal.bind(this);
+        this.hideEditModal = this.hideEditModal.bind(this);
+        this.editPost = this.editPost.bind(this);
+        this.deletePost = this.deletePost.bind(this);
     }
 
-    showModal = () => {
-        this.setState({ show: true });
+    deletePost = (index) => {
+        console.log('Delete post');
+
+        const arr = [...this.state.posts];
+        arr.slice(index, 1);
+
+        this.setState({
+            modalDelete: false,
+            posts: arr,
+        });
     };
 
-    hideModal = () => {
-        this.setState({ show: false });
+    editPost = () => {
+        console.log('Edit post');
+        // this.setState({
+        //     modalEdit: false,
+        //     posts: [...data],
+        // });
     };
+
+    showDeleteModal = () => {
+        this.setState({ modalDelete: true });
+    };
+
+    hideDeleteModal = () => {
+        this.setState({ modalDelete: false });
+    };
+
+    showEditModal = () => {
+        this.setState({ modalEdit: true });
+    };
+
+    hideEditModal = () => {
+        this.setState({ modalEdit: false });
+    };
+
     render() {
+        console.log('list');
         return (
             <>
-                <Modal show={this.state.show} handleClose={this.hideModal}>
-                    <div>{this.props.posts[1].body}</div>
-                </Modal>
                 <ul className='post__list'>
                     {this.props.posts.map((post, index) => {
-                        return <PostItem showModal={this.showModal} text={post.body} key={index} />;
+                        return (
+                            <PostItem
+                                key={index}
+                                id={post.id}
+                                title={post.title}
+                                body={post.body}
+                                showDeleteModal={this.showDeleteModal}
+                                showEditModal={this.showEditModal}
+                            />
+                        );
                     })}
                 </ul>
+                <ModalEdit
+                    stateEditModal={this.state.modalEdit}
+                    hideEditModal={this.hideEditModal}
+                    editSelectedPost={this.editPost}
+                ></ModalEdit>
+                <ModalDelete
+                    stateDeleteModal={this.state.modalDelete}
+                    hideDeleteModal={this.hideDeleteModal}
+                    deleteSelectPost={this.deletePost}
+                >
+                    {'You are wanna delete this post? Are you sure?'}
+                </ModalDelete>
             </>
         );
     }

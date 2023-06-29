@@ -1,12 +1,54 @@
 .list__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     list-style: none;
-    padding: 30px;
+    padding: 10px;
     width: 400px;
-    height: auto;
+    min-height: 200px;
     border: 1px solid #000;
 }
 
-.list__item.item__wrapper {
+.item__content {
+    height: 80%;
+    text-overflow: hidden;
+}
+
+.item__text {
+}
+
+.item__wrapper {
     display: flex;
     justify-content: space-between;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.item__button {
+    width: 120px;
+    padding: 7px 10px;
+    font-size: 16px;
+    font-weight: 600;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.item__button-edit {
+    background: orange;
+}
+
+.item__button-delete {
+    background: red;
+}
+
+.item__button:hover {
+    scale: 1.02;
+    transition: scale 0.2s ease;
+}
+.item__button:active {
+    scale: 0.9;
+    transition: scale 0.2s ease;
 }

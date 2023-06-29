@@ -3,11 +3,15 @@ import '../style/App.css';
 import PostList from './PostList';
 
 export class App extends Component {
-    state = {
-        posts: [],
-    };
+    constructor() {
+        super();
+        this.state = {
+            posts: [],
+        };
+    }
 
     render() {
+        console.log('app');
         return (
             <div className='App'>
                 <div className='container'>
