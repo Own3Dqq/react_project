@@ -11,12 +11,17 @@ export class PostList extends Component {
             posts: [...this.props.posts],
             modalDelete: false,
             modalEdit: false,
+            post: {
+                id: null,
+                title: '',
+                body: '',
+            },
         };
         this.showDeleteModal = this.showDeleteModal.bind(this);
         this.hideDeleteModal = this.hideDeleteModal.bind(this);
         this.showEditModal = this.showEditModal.bind(this);
         this.hideEditModal = this.hideEditModal.bind(this);
-        this.editPost = this.editPost.bind(this);
+        this.editSelectedPost = this.editSelectedPost.bind(this);
         this.deletePost = this.deletePost.bind(this);
     }
 
@@ -32,8 +37,8 @@ export class PostList extends Component {
         });
     };
 
-    editPost = () => {
-        console.log('Edit post');
+    editSelectedPost = (data) => {
+        console.log(data);
         // this.setState({
         //     modalEdit: false,
         //     posts: [...data],
@@ -48,8 +53,15 @@ export class PostList extends Component {
         this.setState({ modalDelete: false });
     };
 
-    showEditModal = () => {
-        this.setState({ modalEdit: true });
+    showEditModal = (title, body) => {
+        this.setState({
+            modalEdit: true,
+            post: {
+                title: title,
+                body: body,
+            },
+        });
+        // this.setState({ modalEdit: true });
     };
 
     hideEditModal = () => {
@@ -75,9 +87,10 @@ export class PostList extends Component {
                     })}
                 </ul>
                 <ModalEdit
+                    datePost={this.state.post}
                     stateEditModal={this.state.modalEdit}
                     hideEditModal={this.hideEditModal}
-                    editSelectedPost={this.editPost}
+                    editSelectedPost={this.editSelectedPost}
                 ></ModalEdit>
                 <ModalDelete
                     stateDeleteModal={this.state.modalDelete}

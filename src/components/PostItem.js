@@ -11,7 +11,10 @@ export class PostItem extends Component {
                         <p className='item__text'>{this.props.body}</p>
                     </div>
                     <div className='item__wrapper'>
-                        <button className='item__button item__button-edit' onClick={this.props.showEditModal}>
+                        <button
+                            className='item__button item__button-edit'
+                            onClick={() => this.props.showEditModal(this.props.title, this.props.body)}
+                        >
                             Edit
                         </button>
                         <button className='item__button item__button-delete' onClick={this.props.showDeleteModal}>

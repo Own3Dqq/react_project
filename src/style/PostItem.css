@@ -3,11 +3,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background: #fff;
     list-style: none;
     padding: 10px;
-    width: 400px;
+    width: auto;
     min-height: 200px;
     border: 1px solid #000;
+    border-radius: 4px;
 }
 
 .item__content {

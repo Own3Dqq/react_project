@@ -11,7 +11,7 @@
     position: fixed;
     background: white;
     width: 560px;
-    height: 320px;
+    min-height: 320px;
     padding: 30px;
     box-sizing: border-box;
     top: 50%;
@@ -19,14 +19,31 @@
     transform: translate(-50%, -50%);
 }
 
+.modal__content {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.modal__content .modal-input__title {
+    margin-bottom: 20px;
+    height: 40px;
+    padding: 20px 15px;
+    max-height: 45px;
+    font-size: 20px;
+}
+
+.modal__content .modal-input__body {
+    height: 100%;
+    min-height: 250px;
+    font-size: 16px;
+}
+
 .modal__inner {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translate(-50%, 0);
-    width: 60%;
     display: flex;
     justify-content: space-between;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .btn {
