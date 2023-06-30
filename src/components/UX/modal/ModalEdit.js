@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import '../modal/Modal.css';
 
 export class ModalEdit extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.state = {
             post: {
+                id: '',
                 title: '',
                 body: '',
             },
@@ -15,16 +16,25 @@ export class ModalEdit extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.datePost !== this.props.datePost) {
+            this.setState({
+                post: {
+                    id: this.props.datePost.id,
+                    title: this.props.datePost.title,
+                    body: this.props.datePost.body,
+                },
+            });
+        }
+    }
+
     handleInputChange = (e, name) => {
-        console.log(this.state);
         this.setState({
-            ...this.state.post,
             post: {
+                ...this.state.post,
                 [name]: e.target.value,
             },
         });
-
-        e.target.name = '';
     };
 
     render() {
@@ -38,7 +48,6 @@ export class ModalEdit extends Component {
                             className='modal-input__title'
                             type='text'
                             value={this.state.post.title}
-                            // value={this.props.datePost.title}
                             onChange={(e) => this.handleInputChange(e, 'title')}
                         />
                         <h3>Content</h3>
@@ -46,7 +55,6 @@ export class ModalEdit extends Component {
                             className='modal-input__body'
                             type='text'
                             value={this.state.post.body}
-                            // value={this.props.datePost.body}
                             onChange={(e) => this.handleInputChange(e, 'body')}
                         />
                     </div>
@@ -54,7 +62,8 @@ export class ModalEdit extends Component {
                         <button
                             type='button'
                             className='btn btn-confirm'
-                            onClick={() => this.props.editSelectedPost(this.state.post)}
+                            value={this.state.post.body}
+                            onClick={() => this.props.editSelectPost(this.state.post)}
                         >
                             Edit
                         </button>{' '}

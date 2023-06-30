@@ -8,7 +8,7 @@ export class PostList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts: [...this.props.posts],
+            posts: [],
             modalDelete: false,
             modalEdit: false,
             post: {
@@ -17,51 +17,65 @@ export class PostList extends Component {
                 body: '',
             },
         };
+
         this.showDeleteModal = this.showDeleteModal.bind(this);
         this.hideDeleteModal = this.hideDeleteModal.bind(this);
         this.showEditModal = this.showEditModal.bind(this);
         this.hideEditModal = this.hideEditModal.bind(this);
-        this.editSelectedPost = this.editSelectedPost.bind(this);
-        this.deletePost = this.deletePost.bind(this);
+        this.editSelectPost = this.editSelectPost.bind(this);
+        this.deleteSelectPost = this.deleteSelectPost.bind(this);
     }
 
-    deletePost = (index) => {
-        console.log('Delete post');
-
-        const arr = [...this.state.posts];
-        arr.slice(index, 1);
-
+    deleteSelectPost = (post) => {
+        const filteredPosts = this.state.posts.filter((item) => item.id !== post.id);
         this.setState({
             modalDelete: false,
-            posts: arr,
+            posts: filteredPosts,
         });
     };
 
-    editSelectedPost = (data) => {
+    editSelectPost = (data) => {
         console.log(data);
-        // this.setState({
-        //     modalEdit: false,
-        //     posts: [...data],
-        // });
+        const updatedPosts = this.state.posts.map((post) => {
+            if (post.id === data.id) {
+                return {
+                    ...post,
+                    title: data.title,
+                    body: data.body,
+                };
+            }
+            return post;
+        });
+        this.setState({
+            modalEdit: false,
+            posts: updatedPosts,
+        });
     };
 
-    showDeleteModal = () => {
-        this.setState({ modalDelete: true });
+    showDeleteModal = (id) => {
+        this.setState({
+            post: {
+                id: id,
+                title: '',
+                body: '',
+            },
+            modalDelete: true,
+        });
     };
 
     hideDeleteModal = () => {
         this.setState({ modalDelete: false });
     };
 
-    showEditModal = (title, body) => {
+    showEditModal = (id, title, body) => {
         this.setState({
             modalEdit: true,
             post: {
+                id: id,
                 title: title,
                 body: body,
             },
         });
-        // this.setState({ modalEdit: true });
     };
 
     hideEditModal = () => {
@@ -69,19 +83,18 @@ export class PostList extends Component {
     };
 
     render() {
-        console.log('list');
         return (
             <>
                 <ul className='post__list'>
-                    {this.props.posts.map((post, index) => {
+                    {this.state.posts.map((post, index) => {
                         return (
                             <PostItem
                                 key={index}
                                 id={post.id}
                                 title={post.title}
                                 body={post.body}
-                                showDeleteModal={this.showDeleteModal}
                                 showEditModal={this.showEditModal}
+                                showDeleteModal={this.showDeleteModal}
                             />
                         );
                     })}
@@ -90,17 +103,24 @@ export class PostList extends Component {
                     datePost={this.state.post}
                     stateEditModal={this.state.modalEdit}
                     hideEditModal={this.hideEditModal}
-                    editSelectedPost={this.editSelectedPost}
+                    editSelectPost={this.editSelectPost}
                 ></ModalEdit>
                 <ModalDelete
+                    datePost={this.state.post}
                     stateDeleteModal={this.state.modalDelete}
                     hideDeleteModal={this.hideDeleteModal}
-                    deleteSelectPost={this.deletePost}
+                    deleteSelectPost={this.deleteSelectPost}
                 >
                     {'You are wanna delete this post? Are you sure?'}
                 </ModalDelete>
             </>
         );
+    }
+
+    componentDidMount() {
+        fetch('https://jsonplaceholder.typicode.com/posts')
+            .then((response) => response.json())
+            .then((data) => this.setState({ posts: data }));
     }
 }
 
