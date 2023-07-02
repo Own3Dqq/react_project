@@ -97,6 +97,14 @@
     color: var(--main-bg-button);
 }
 
+.modal__errorMessage {
+    width: 100%;
+    padding: 10px 5px;
+    font-size: 14px;
+    font-weight: 600;
+    color: red;
+}
+
 /* Show/Hide Modal */
 .display-block {
     display: block;

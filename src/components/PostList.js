@@ -10,9 +10,11 @@ export class PostList extends Component {
         super(props);
         this.state = {
             posts: [],
-            modalDelete: false,
-            modalEdit: false,
-            modalNewPost: false,
+            statusModal: {
+                edit: false,
+                delete: false,
+                create: false,
+            },
             post: {
                 id: null,
                 title: '',
@@ -33,22 +35,28 @@ export class PostList extends Component {
 
     createNewPost = (e, data) => {
         e.preventDefault();
+
         this.setState({
-            modalNewPost: false,
-            posts: this.state.posts.concat(data),
+            statusModal: {
+                ...this.state.statusModal,
+                create: false,
+            },
+            posts: [data, ...this.state.posts],
         });
     };
 
     deleteSelectPost = (post) => {
         const filteredPosts = this.state.posts.filter((item) => item.id !== post.id);
         this.setState({
-            modalDelete: false,
+            statusModal: {
+                ...this.state.statusModal,
+                delete: false,
+            },
             posts: filteredPosts,
         });
     };
 
     editSelectPost = (data) => {
-        console.log(data);
         const updatedPosts = this.state.posts.map((post) => {
             if (post.id === data.id) {
                 return {
@@ -60,30 +68,44 @@ export class PostList extends Component {
             return post;
         });
         this.setState({
-            modalEdit: false,
+            statusModal: {
+                ...this.state.statusModal,
+                edit: false,
+            },
             posts: updatedPosts,
         });
     };
 
     showDeleteModal = (id) => {
         this.setState({
+            statusModal: {
+                ...this.state.statusModal,
+                delete: true,
+            },
             post: {
                 id: id,
                 title: '',
                 body: '',
             },
-            modalDelete: true,
         });
     };
 
     hideDeleteModal = (e) => {
         e.preventDefault();
-        this.setState({ modalDelete: false });
+        this.setState({
+            statusModal: {
+                ...this.state.statusModal,
+                delete: false,
+            },
+        });
     };
 
     showEditModal = (id, title, body) => {
         this.setState({
-            modalEdit: true,
+            statusModal: {
+                ...this.state.statusModal,
+                edit: true,
+            },
             post: {
                 id: id,
                 title: title,
@@ -94,19 +116,30 @@ export class PostList extends Component {
 
     hideEditModal = (e) => {
         e.preventDefault();
-        this.setState({ modalEdit: false });
+        this.setState({
+            statusModal: {
+                ...this.state.statusModal,
+                edit: false,
+            },
+        });
     };
 
     showModalNewPost = () => {
         this.setState({
-            modalNewPost: true,
+            statusModal: {
+                ...this.state.statusModal,
+                create: true,
+            },
         });
     };
 
     hideModalNewPost = (e) => {
         e.preventDefault();
         this.setState({
-            modalNewPost: false,
+            statusModal: {
+                ...this.state.statusModal,
+                create: false,
+            },
         });
     };
 
@@ -139,25 +172,32 @@ export class PostList extends Component {
                     </ul>
                 </main>
 
-                <ModalEdit
-                    datePost={this.state.post}
-                    stateEditModal={this.state.modalEdit}
-                    hideEditModal={this.hideEditModal}
-                    editSelectPost={this.editSelectPost}
-                />
-                <ModalDelete
-                    datePost={this.state.post}
-                    stateDeleteModal={this.state.modalDelete}
-                    hideDeleteModal={this.hideDeleteModal}
-                    deleteSelectPost={this.deleteSelectPost}
-                >
-                    {'You are wanna delete this post? Are you sure?'}
-                </ModalDelete>
-                <ModalNewPost
-                    stateCreatePost={this.state.modalNewPost}
-                    createNewPost={this.createNewPost}
-                    hideModalNewPost={this.hideModalNewPost}
-                ></ModalNewPost>
+                {this.state.statusModal.edit && (
+                    <ModalEdit
+                        datePost={this.state.post}
+                        stateEditModal={this.state.statusModal.edit}
+                        hideEditModal={this.hideEditModal}
+                        editSelectPost={this.editSelectPost}
+                    />
+                )}
+                {this.state.statusModal.delete && (
+                    <ModalDelete
+                        datePost={this.state.post}
+                        stateDeleteModal={this.state.statusModal.delete}
+                        hideDeleteModal={this.hideDeleteModal}
+                        deleteSelectPost={this.deleteSelectPost}
+                    >
+                        {'You are wanna delete this post? Are you sure?'}
+                    </ModalDelete>
+                )}
+                {this.state.statusModal.create && (
+                    <ModalNewPost
+                        postsList={this.state.posts}
+                        stateCreatePost={this.state.statusModal.create}
+                        createNewPost={this.createNewPost}
+                        hideModalNewPost={this.hideModalNewPost}
+                    ></ModalNewPost>
+                )}
             </>
         );
     }

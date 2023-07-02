@@ -4,7 +4,7 @@ import '../modal/Modal.css';
 
 export class ModalDelete extends Component {
     render() {
-        const { stateDeleteModal, hideDeleteModal, children } = this.props;
+        const { stateDeleteModal, hideDeleteModal } = this.props;
 
         const showHideClassName = stateDeleteModal ? 'modal__overlay display-block' : 'modal__overlay display-none';
         return (
