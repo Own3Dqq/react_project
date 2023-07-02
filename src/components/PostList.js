@@ -3,6 +3,7 @@ import '../style/PostList.css';
 import PostItem from './PostItem';
 import ModalEdit from './UX/modal/ModalEdit';
 import ModalDelete from './UX/modal/ModalDelete';
+import ModalNewPost from './UX/modal/ModalNewPost';
 
 export class PostList extends Component {
     constructor(props) {
@@ -11,6 +12,7 @@ export class PostList extends Component {
             posts: [],
             modalDelete: false,
             modalEdit: false,
+            modalNewPost: false,
             post: {
                 id: null,
                 title: '',
@@ -18,13 +20,24 @@ export class PostList extends Component {
             },
         };
 
+        this.createNewPost = this.createNewPost.bind(this);
         this.showDeleteModal = this.showDeleteModal.bind(this);
         this.hideDeleteModal = this.hideDeleteModal.bind(this);
         this.showEditModal = this.showEditModal.bind(this);
         this.hideEditModal = this.hideEditModal.bind(this);
         this.editSelectPost = this.editSelectPost.bind(this);
         this.deleteSelectPost = this.deleteSelectPost.bind(this);
+        this.showModalNewPost = this.showModalNewPost.bind(this);
+        this.hideModalNewPost = this.hideModalNewPost.bind(this);
     }
+
+    createNewPost = (e, data) => {
+        e.preventDefault();
+        this.setState({
+            modalNewPost: false,
+            posts: this.state.posts.concat(data),
+        });
+    };
 
     deleteSelectPost = (post) => {
         const filteredPosts = this.state.posts.filter((item) => item.id !== post.id);
@@ -63,7 +76,8 @@ export class PostList extends Component {
         });
     };
 
-    hideDeleteModal = () => {
+    hideDeleteModal = (e) => {
+        e.preventDefault();
         this.setState({ modalDelete: false });
     };
 
@@ -78,33 +92,59 @@ export class PostList extends Component {
         });
     };
 
-    hideEditModal = () => {
+    hideEditModal = (e) => {
+        e.preventDefault();
         this.setState({ modalEdit: false });
+    };
+
+    showModalNewPost = () => {
+        this.setState({
+            modalNewPost: true,
+        });
+    };
+
+    hideModalNewPost = (e) => {
+        e.preventDefault();
+        this.setState({
+            modalNewPost: false,
+        });
     };
 
     render() {
         return (
             <>
-                <ul className='post__list'>
-                    {this.state.posts.map((post, index) => {
-                        return (
-                            <PostItem
-                                key={index}
-                                id={post.id}
-                                title={post.title}
-                                body={post.body}
-                                showEditModal={this.showEditModal}
-                                showDeleteModal={this.showDeleteModal}
-                            />
-                        );
-                    })}
-                </ul>
+                <header className='header'>
+                    <button onClick={this.showModalNewPost} className='btn__new-post'>
+                        <svg xmlns='http://www.w3.org/2000/svg' height='1em' viewBox='0 0 448 512'>
+                            <path d='M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z' />
+                        </svg>
+                        {''}
+                        Create new post
+                    </button>
+                </header>
+                <main className='main'>
+                    <ul className='post__list'>
+                        {this.state.posts.map((post, index) => {
+                            return (
+                                <PostItem
+                                    key={index}
+                                    id={post.id}
+                                    title={post.title}
+                                    body={post.body}
+                                    showEditModal={this.showEditModal}
+                                    showDeleteModal={this.showDeleteModal}
+                                />
+                            );
+                        })}
+                    </ul>
+                </main>
+
                 <ModalEdit
                     datePost={this.state.post}
                     stateEditModal={this.state.modalEdit}
                     hideEditModal={this.hideEditModal}
                     editSelectPost={this.editSelectPost}
-                ></ModalEdit>
+                />
                 <ModalDelete
                     datePost={this.state.post}
                     stateDeleteModal={this.state.modalDelete}
@@ -113,6 +153,11 @@ export class PostList extends Component {
                 >
                     {'You are wanna delete this post? Are you sure?'}
                 </ModalDelete>
+                <ModalNewPost
+                    stateCreatePost={this.state.modalNewPost}
+                    createNewPost={this.createNewPost}
+                    hideModalNewPost={this.hideModalNewPost}
+                ></ModalNewPost>
             </>
         );
     }

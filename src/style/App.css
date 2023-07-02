@@ -1,7 +1,3 @@
-.App {
-    text-align: center;
-}
-
 *,
 *::before,
 *::after {
@@ -11,7 +7,12 @@
 }
 
 body {
-    background: #545460;
+    background: #118ab2;
+    color: #210b2c;
+}
+
+.App {
+    text-align: center;
 }
 
 .container {

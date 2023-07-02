@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../modal/Modal.css';
 
-export class ModalEdit extends Component {
+export class ModalNewPost extends Component {
     constructor() {
         super();
 
@@ -16,18 +16,6 @@ export class ModalEdit extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.datePost !== this.props.datePost) {
-            this.setState({
-                post: {
-                    id: this.props.datePost.id,
-                    title: this.props.datePost.title,
-                    body: this.props.datePost.body,
-                },
-            });
-        }
-    }
-
     handleInputChange = (e, name) => {
         this.setState({
             post: {
@@ -38,10 +26,12 @@ export class ModalEdit extends Component {
     };
 
     render() {
-        const showHideClassName = this.props.stateEditModal ? 'modal display-block' : 'modal display-none';
+        const showHideClassName = this.props.stateCreatePost
+            ? 'modal__overlay display-block'
+            : 'modal__overlay display-none';
         return (
             <div className={showHideClassName}>
-                <section className='modal__main'>
+                <div className='modal__main'>
                     <form className='modal__form'>
                         <div className='modal__wrapper'>
                             <label className='modal__label' htmlFor='title'>
@@ -49,46 +39,42 @@ export class ModalEdit extends Component {
                             </label>
                             <input
                                 className='modal__input'
-                                name='title'
                                 type='text'
+                                name='title'
                                 value={this.state.post.title}
                                 onChange={(e) => this.handleInputChange(e, 'title')}
                             />
                         </div>
                         <div className='modal__wrapper'>
                             <label className='modal__label' htmlFor='body'>
-                                Content
+                                Body
                             </label>
-                            <input
-                                className='modal__input'
-                                name='body'
+                            <textarea
+                                className='modal__textarea'
                                 type='text'
+                                name='body'
                                 value={this.state.post.body}
-                                onChange={(e) => this.handleInputChange(e, 'body')}
+                                onChange={(e) => {
+                                    this.handleInputChange(e, 'body');
+                                }}
                             />
                         </div>
                         <div className='modal__buttons'>
                             <button
-                                className='modal__button btn btn-confirm'
-                                type='button'
-                                value={this.state.post.body}
-                                onClick={() => this.props.editSelectPost(this.state.post)}
+                                className='modal__button'
+                                onClick={(e) => this.props.createNewPost(e, this.state.post)}
                             >
-                                Edit
+                                Create
                             </button>
-                            <button
-                                className='modal__button btn btn-cancel'
-                                type='button'
-                                onClick={this.props.hideEditModal}
-                            >
+                            <button className='modal__button' onClick={this.props.hideModalNewPost}>
                                 Cancel
                             </button>
                         </div>
                     </form>
-                </section>
+                </div>
             </div>
         );
     }
 }
 
-export default ModalEdit;
+export default ModalNewPost;

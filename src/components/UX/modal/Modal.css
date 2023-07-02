@@ -1,4 +1,13 @@
-.modal {
+:root {
+    --main-text-color: #8ecae6;
+    --second-text-color: #219ebc;
+    --main-bg-color: #023047;
+    --main-bg-button: #fb8500;
+    --btn-bg-hover: #ffb703;
+    --border-radius: 4px;
+}
+
+.modal__overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -7,65 +16,88 @@
     background: rgba(0, 0, 0, 0.6);
 }
 
-.modal-main {
+.modal__main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: fixed;
-    background: white;
-    width: 560px;
-    min-height: 320px;
+    background: var(--main-bg-color);
+    border-radius: var(--border-radius);
+    width: 520px;
+    /* min-height: 480px; */
     padding: 30px;
-    box-sizing: border-box;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.modal__content {
+.modal__form {
+}
+
+.modal__wrapper {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
-}
-
-.modal__content .modal-input__title {
-    margin-bottom: 20px;
-    height: 40px;
-    padding: 20px 15px;
-    max-height: 45px;
-    font-size: 20px;
-}
-
-.modal__content .modal-input__body {
-    height: 100%;
-    min-height: 250px;
-    font-size: 16px;
-}
-
-.modal__inner {
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
     margin: 0 auto;
+    width: 100%;
 }
 
-.btn {
+.modal__message {
+    font-size: 30px;
+    color: var(--main-text-color);
+}
+
+.modal__label {
+    font-size: 20px;
+    padding: 10px 0;
+    color: var(--main-text-color);
+}
+
+.modal__input {
+    background: transparent;
+    border: 1px solid orange;
+    border-radius: var(--border-radius);
+    min-height: 40px;
+    font-size: 16px;
+    padding: 4px 15px;
+    color: var(--second-text-color);
+}
+
+.modal__textarea {
+    min-height: 220px;
+    resize: none;
+    border: 1px solid var(--main-bg-button);
+    border-radius: var(--border-radius);
+    padding: 10px 15px;
+    color: var(--second-text-color);
+    background: transparent;
+}
+
+.modal__buttons {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+
+.modal__button {
     min-width: 160px;
     min-height: 45px;
     padding: 7px 12px;
-    background: none;
-    border: none;
-    border-radius: 4px;
+    background: var(--main-bg-button);
+    border: 1px solid var(--main-bg-button);
+    color: var(--main-bg-color);
+    border-radius: var(--border-radius);
     font-size: 20px;
     font-weight: 600;
     cursor: pointer;
 }
 
-.btn.btn-confirm {
-    background: green;
+.modal__button:hover {
+    transition: all 0.2s ease;
+    background: transparent;
+    color: var(--main-bg-button);
 }
 
-.btn.btn-cancel {
-    background: red;
-}
-
+/* Show/Hide Modal */
 .display-block {
     display: block;
 }
