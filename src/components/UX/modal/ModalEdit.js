@@ -2,30 +2,18 @@ import React, { Component } from 'react';
 import '../modal/Modal.css';
 
 export class ModalEdit extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             post: {
-                id: '',
-                title: '',
-                body: '',
+                id: props.datePost.id,
+                title: props.datePost.title,
+                body: props.datePost.body,
             },
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.datePost !== this.props.datePost) {
-            this.setState({
-                post: {
-                    id: this.props.datePost.id,
-                    title: this.props.datePost.title,
-                    body: this.props.datePost.body,
-                },
-            });
-        }
     }
 
     handleInputChange = (e, name) => {
@@ -38,9 +26,8 @@ export class ModalEdit extends Component {
     };
 
     render() {
-        const showHideClassName = this.props.stateEditModal ? 'modal display-block' : 'modal display-none';
         return (
-            <div className={showHideClassName}>
+            <div className='modal__overlay'>
                 <section className='modal__main'>
                     <form className='modal__form'>
                         <div className='modal__wrapper'>

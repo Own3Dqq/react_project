@@ -102,14 +102,14 @@ export class PostList extends Component {
 
     showEditModal = (id, title, body) => {
         this.setState({
-            statusModal: {
-                ...this.state.statusModal,
-                edit: true,
-            },
             post: {
                 id: id,
                 title: title,
                 body: body,
+            },
+            statusModal: {
+                ...this.state.statusModal,
+                edit: true,
             },
         });
     };
@@ -171,7 +171,6 @@ export class PostList extends Component {
                         })}
                     </ul>
                 </main>
-
                 {this.state.statusModal.edit && (
                     <ModalEdit
                         datePost={this.state.post}
