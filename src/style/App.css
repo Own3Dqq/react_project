@@ -1,0 +1,21 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #118ab2;
+    color: #210b2c;
+}
+
+.App {
+    text-align: center;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 15px;
+}

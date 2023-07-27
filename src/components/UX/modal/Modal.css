@@ -1,0 +1,115 @@
+:root {
+    --main-text-color: #8ecae6;
+    --second-text-color: #219ebc;
+    --main-bg-color: #023047;
+    --main-bg-button: #fb8500;
+    --btn-bg-hover: #ffb703;
+    --border-radius: 4px;
+}
+
+.modal__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.modal__main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+    background: var(--main-bg-color);
+    border-radius: var(--border-radius);
+    width: 520px;
+    /* min-height: 480px; */
+    padding: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal__form {
+}
+
+.modal__wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.modal__message {
+    font-size: 30px;
+    color: var(--main-text-color);
+}
+
+.modal__label {
+    font-size: 20px;
+    padding: 10px 0;
+    color: var(--main-text-color);
+}
+
+.modal__input {
+    background: transparent;
+    border: 1px solid orange;
+    border-radius: var(--border-radius);
+    min-height: 40px;
+    font-size: 16px;
+    padding: 4px 15px;
+    color: var(--second-text-color);
+}
+
+.modal__textarea {
+    min-height: 220px;
+    resize: none;
+    border: 1px solid var(--main-bg-button);
+    border-radius: var(--border-radius);
+    padding: 10px 15px;
+    color: var(--second-text-color);
+    background: transparent;
+}
+
+.modal__buttons {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+
+.modal__button {
+    min-width: 160px;
+    min-height: 45px;
+    padding: 7px 12px;
+    background: var(--main-bg-button);
+    border: 1px solid var(--main-bg-button);
+    color: var(--main-bg-color);
+    border-radius: var(--border-radius);
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.modal__button:hover {
+    transition: all 0.2s ease;
+    background: transparent;
+    color: var(--main-bg-button);
+}
+
+.modal__errorMessage {
+    width: 100%;
+    padding: 10px 5px;
+    font-size: 14px;
+    font-weight: 600;
+    color: red;
+}
+
+/* Show/Hide Modal */
+.display-block {
+    display: block;
+}
+
+.display-none {
+    display: none;
+}
